@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootcamp Widgets</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="transportfee.js"></script>
+    <script src="transportfee-widget.js"></script>
+    <script src="phoneBill.js"></script>
+    <script src="phoneBill-widget.js"></script>
+    <script src="Word-game.js"></script>
+    <script src="word-game-widget.js"></script>
+    <script src="Expensive-items.js"></script>
+    <script src="expensive-items-widget.js"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script>
+        //console.log(transportFee('morning'));
+        //console.log(totalPhoneBill('call, sms, call, sms, sms'));
+        //console.log(findItemsOver20([
+        //   { name: 'apples', qty: 10 },
+        // { name: 'pears', qty: 37 },
+        //    { name: 'bananas', qty: 27 },
+        //   { name: 'apples', qty: 3 },
+        //]))
+
+    //var obj = [
+    //      { name: 'apples', qty: 10 },
+    //     { name: 'pears', qty: 37 },
+     //   { name: 'bananas', qty: 27 },
+     //     { name: 'apples', qty: 3 },
+    //  ];
+    //    var value = null;
+    //   function greater20(obj) {
+     //   var item = findItemsOver20(obj);
+     //    this.value = item;
+    //      return value;
+      // }
+     //   console.log(greater20(obj).valueOf());
+     //console.log(wordLengths('The dog jumped over the shipyard fence'))
+
+    </script>
+    >
+
+</head>
+
+<body>
+    <h1>Widgets for Bootcamp functions</h1>
+    <div class="widgets">
+        <div class="widget" x-data='returnFee'>
+            <h2>Transport Fee</h2>
+            <form>
+                <p>Select your shift:</p>
+                <input type="radio" name="shift" id="morning" value="morning" @click="fee('morning')">
+                <label for="morning">Morning</label>
+                <input type="radio" name="shift" id="afternoon" value="afternoon" @click="fee('afternoon')">
+                <label for="afternoon">Afternoon</label>
+                <input type="radio" name="shift" id="nightshift" value="nightshift" @click="fee('nightshift')">
+                <label for="morning">Nightshift</label>
+            </form>
+        </div>
+        <div class="widget" x-data='phoneBill'>
+            <h2>Total Phone Bill</h2>
+            <div class="input">
+                <label for="usage">Enter your calls and sms:</label>
+                <input type="text" x-model='phoneAction' id="usage"><button @click="bill">Submit</button>
+            </div>
+            Total:<span x-text="totalCount"></span>
+        </div>
+        <div class="widget" x-data='wordGame'>
+            <h2>Word Count</h2>
+            <div class="input">
+                <label for="sentenace">Enter sentence:</label>
+                <input type="text" id="sentenace" x-model='inputText'><button @click="output">Submit</button>
+                <div>
+                    Longest Word: <span x-text='long'></span> <br>
+                    Shortest Word: <span x-text='short'></span> <br>
+                    Word Lengths: <span x-text='totalWord'></span> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="widgets">
+        <div class="widget" x-data='expensiveItem'>
+            <h2>Expensive Items</h2>
+            <div class="input">
+                <form x-on:submit.stop.prevent="addRemove">
+                    <label for="fruit">Enter Fruit:</label>
+                    <input type="text" id="fruit" aria-describedby="text" x-model="newFruit">
+                    <label for="quantity">Enter Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" aria-describedby="quantity" min="1" max="100"
+                        x-model="newQty">
+                    <button type="submit">Add</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Fruit</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="(item,index) in Object.values(fruitList)" :key="index">
+                            <tr>
+                                <td x-text="item.name"></td>
+                                <td x-text="item.qty"></td>
+                                <td><button @click="fruitList = fruitList.filter(p => p.id !== item.id)">Remove</button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <div class="bottom">
+                    <div>
+                        <form x-on:submit.stop.prevent="greater20">
+                            <button type="submit" @click="console.log(over20)">Items Over 20</button>
+                        </form>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fruit</th>
+                                    <th scope="col">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template x-for="(item,index) in Object.values(over20)" :key="index">
+                                    <tr>
+                                        <td x-text="item.name"></td>
+                                        <td x-text="item.qty"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <form x-on:submit.stop.prevent="greater">
+                            <label for="itemsOver">Select quantity:</label>
+                            <input type="number" id="quantity" name="quantity" min="1" max="100" x-model='threshold'>
+                            <button type="submit" @click="console.log(over)">Item Over</button>
+                        </form>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Fruit</th>
+                                    <th scope="col">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template x-for="(item,index) in Object.values(over)" :key="index">
+                                    <tr>
+                                        <td x-text="item.name"></td>
+                                        <td x-text="item.qty"></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

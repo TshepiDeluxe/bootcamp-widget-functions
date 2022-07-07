@@ -1,0 +1,26 @@
+body{
+    background-color: beige;
+}
+
+.widgets {
+    display: flex;
+}
+
+.widget {
+    border: 1px solid;
+    margin: 1em;
+    padding: 1em;
+    width: auto;
+}
+
+input[type=text] {
+    box-sizing: border-box;
+}
+
+input[type=number] {
+    box-sizing: border-box;
+}
+
+.bottom{
+    display: flex;
+}
